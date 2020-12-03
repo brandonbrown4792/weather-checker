@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { fetchLocation } from '../apiUtilities/apiUtilities';
+import { fetchLocation, fetchWeather } from '../services/apiUtilities';
 
 export function HomePage() {
-    const [coordinates, setCoordinates] = useState({});
+    const [weatherInfo, setWeatherInfo] = useState({});
+
+    const getWeather = function () {
+        getLocation()
+            .then(coords => fetchWeather(coords))
+    }
 
     const getLocation = function () {
-        fetchLocation()
-            .then(coords => setCoordinates(coords))
+        return fetchLocation()
+            .then(coords => coords)
             .catch(err => {
                 console.warn(err.message)
             });
     }
 
     return <>
-        <Button onClick={getLocation}>Location?</Button>
-        <div>Your coordinates are: </div>
-        <div>Latitude: {coordinates.latitude}</div>
-        <div>Latitude: {coordinates.longitude}</div>
+        <Button onClick={getWeather}>Get Weather</Button>
+        <div>Your weather info is: </div>
+        {/* <div>Latitude: {coordinates.latitude}</div> */}
     </>
 }
