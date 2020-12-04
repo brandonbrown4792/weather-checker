@@ -38,5 +38,5 @@ export function fetchWeather(coords) {
 
     return fetch(`${API_ROOT}/api/v1/get-weather`, fetchObj)
         .then(res => res.json())
-        .then(data => console.log(data));
+        .then(data => { return { data: data } });
 }
