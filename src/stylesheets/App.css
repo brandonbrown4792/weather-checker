@@ -36,3 +36,24 @@
     transform: rotate(360deg);
   }
 }
+
+.centered-text {
+  text-align: center;
+}
+
+.left-aligned-text {
+  text-align: left;
+}
+
+.weather-card {
+  margin: 20px auto;
+  max-width: 400px;
+}
+
+.weather-description {
+  font-size: 2rem;
+}
+
+.temp-title {
+  font-size: 4rem;
+}

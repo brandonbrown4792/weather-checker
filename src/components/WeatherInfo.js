@@ -50,19 +50,21 @@ export function WeatherInfo({ data }) {
 
     return (
         <>
-            {formattedWeatherData && <Card style={{ margin: '20px auto', maxWidth: '400px' }}>
-                <Card.Body style={{ textAlign: 'center' }}>
+            {formattedWeatherData && <Card className='weather-card'>
+                <Card.Body className='centered-text'>
                     <Row>
                         <Col><div className='mb-1'>Location: {formattedWeatherData.cityName}</div></Col>
                     </Row>
                     {formattedWeatherData.weather.map(el =>
                         <Row key={el.description}>
-                            <Col><div style={{ fontSize: '2rem' }}>{el.description}</div></Col>
+                            <Col><div className='weather-description mb-2'>{el.description}</div></Col>
                         </Row>
                     )}
                     <Row className='mb-3'>
                         <Col md={5}>
-                            <Card.Title style={{ fontSize: '4rem' }}>{formattedWeatherData.main.temp}</Card.Title>
+                            <Card.Title>
+                                <div className='temp-title'>{formattedWeatherData.main.temp}</div>
+                            </Card.Title>
                         </Col>
                         <Col md={7}>
                             <div className='mb-2'>Feels like: {formattedWeatherData.main.feels_like}</div>
