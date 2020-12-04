@@ -24,8 +24,6 @@ export function HomePage() {
             });
     }
 
-    console.log(weatherInfo)
-
     return <Container className='weather-container'>
         <Button className='get-weather-button' variant='info' onClick={getWeather} block>Get Weather</Button>
         {weatherInfo.data && <WeatherInfo data={weatherInfo.data} />}
