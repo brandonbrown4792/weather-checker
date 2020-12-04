@@ -1,18 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Row, Col } from 'react-bootstrap';
+import { Card, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 
 export function WeatherInfo({ data }) {
-    const tempScales = {
-        Fahrenheit: 'F',
-        Celcius: 'C'
-    }
-
     const [formattedWeatherData, setFormattedWeatherData] = useState(null)
     const [tempScale, setTempScale] = useState('F');
 
     useEffect(() => {
+        const tempScales = {
+            Fahrenheit: 'F',
+            Celcius: 'C'
+        }
+
+        function convertTemp(K, scale) {
+            if (scale === tempScales.Celcius) {
+                return `${Math.round(K - 273.15)}°`;
+            } else {
+                return `${Math.round((K - 273.15) * 9 / 5 + 32)}°`;
+            }
+        }
+
+        function titleCase(str) {
+            let splitStr = str.split(' ');
+            return splitStr.map(word => word[0].toUpperCase() + word.slice(1)).join(' ');
+        }
+
+        function calculateWindDirection(degree) {
+            let value = Math.floor(degree / 45 + 0.5);
+            let directions = ["North", "North East", "East", "South East", "South", "South West", "West", "North West"];
+            return directions[value % 8];
+        }
+
         setFormattedWeatherData({
-            ...formattedWeatherData,
             cityName: data.name,
             main: {
                 feels_like: convertTemp(data.main.feels_like, tempScale),
@@ -27,26 +45,7 @@ export function WeatherInfo({ data }) {
                 direction: calculateWindDirection(data.wind.deg)
             }
         })
-    }, [])
-
-    function convertTemp(K, scale) {
-        if (scale === tempScales.Celcius) {
-            return `${Math.round(K - 273.15)}°`;
-        } else {
-            return `${Math.round((K - 273.15) * 9 / 5 + 32)}°`;
-        }
-    }
-
-    function titleCase(str) {
-        let splitStr = str.split(' ');
-        return splitStr.map(word => word[0].toUpperCase() + word.slice(1)).join(' ');
-    }
-
-    function calculateWindDirection(degree) {
-        let value = Math.floor(degree / 45 + 0.5);
-        let directions = ["North", "North East", "East", "South East", "South", "South West", "West", "North West"];
-        return directions[value % 8];
-    }
+    }, [tempScale, data])
 
     return (
         <>
@@ -72,12 +71,16 @@ export function WeatherInfo({ data }) {
                             <div>Low: {formattedWeatherData.main.temp_min}</div>
                         </Col>
                     </Row>
-                    <Row>
+                    <Row className='mb-2'>
                         <Col>
                             <div>Wind: {formattedWeatherData.wind.speed} {formattedWeatherData.wind.direction}</div>
                             <div>Humidity: {formattedWeatherData.main.humidity}</div>
                         </Col>
                     </Row>
+                    <ToggleButtonGroup type="radio" name="options" defaultValue={'F'} onChange={(val) => setTempScale(val)}>
+                        <ToggleButton variant='info' value={'F'}>°F</ToggleButton>
+                        <ToggleButton variant='info' value={'C'}>°C</ToggleButton>
+                    </ToggleButtonGroup>
                 </Card.Body>
             </Card>}
         </>
