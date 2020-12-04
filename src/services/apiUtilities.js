@@ -37,6 +37,15 @@ export function fetchWeather(coords) {
     }
 
     return fetch(`${API_ROOT}/api/v1/get-weather`, fetchObj)
-        .then(res => res.json())
-        .then(data => { return { data: data } });
+        .then(res => {
+            if (res.status == 200) {
+                return res.json()
+            } else {
+                throw Error()
+            }
+        })
+        .then(data => ({ data: data }))
+        .catch(err => {
+            alert('Could not retrieve weather data');
+        });
 }

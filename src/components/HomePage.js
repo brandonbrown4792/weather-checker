@@ -11,7 +11,9 @@ export function HomePage() {
     const getWeather = function () {
         getLocation()
             .then(coords => fetchWeather(coords))
-            .then(info => setWeatherInfo(info))
+            .then(info => {
+                info && setWeatherInfo(info)
+            })
     }
 
     const getLocation = function () {
