@@ -1,5 +1,5 @@
 const DEV_URL = 'http://localhost:3000'
-const PROD_URL = 'tdb'
+const PROD_URL = 'https://weather-checker-api.herokuapp.com/'
 const API_ROOT = process.env.NODE_ENV === 'development' ? DEV_URL : PROD_URL
 
 export function fetchLocation() {
@@ -38,7 +38,7 @@ export function fetchWeather(coords) {
 
     return fetch(`${API_ROOT}/api/v1/get-weather`, fetchObj)
         .then(res => {
-            if (res.status == 200) {
+            if (res.status === 200) {
                 return res.json()
             } else {
                 throw Error()
