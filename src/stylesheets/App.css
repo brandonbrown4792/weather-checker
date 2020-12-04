@@ -37,6 +37,14 @@
   }
 }
 
+.weather-container {
+  max-width: 600px;
+}
+
+.get-weather-button {
+  margin-top: 40%;
+}
+
 .centered-text {
   text-align: center;
 }

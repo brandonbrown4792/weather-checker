@@ -22,8 +22,10 @@ export function HomePage() {
             });
     }
 
-    return <Container style={{ maxWidth: '600px' }}>
-        <Button style={{ marginTop: '40%' }} onClick={getWeather} block>Get Weather</Button>
+    console.log(weatherInfo)
+
+    return <Container className='weather-container'>
+        <Button className='get-weather-button' variant='info' onClick={getWeather} block>Get Weather</Button>
         {weatherInfo.data && <WeatherInfo data={weatherInfo.data} />}
     </Container>
 }
